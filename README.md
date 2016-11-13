@@ -1,10 +1,8 @@
-# speech-sentiment-python
-polite software
+#Alexa and GNU Prolog Integration
+###Andrew Lee
 
-
-## .env
-BLUEMIX_USERNAME=*your bluemix credential*
-
-BLUEMIX_PASSWORD=*your bluemix credential*
-
-ALCHEMY_API_KEY=*your alchemy api key*
+##Libraries
+ZeroMQ- http://zeromq.org/
+Libsodium- https://github.com/jedisct1/libsodium
+Node.js
+Volution-GProlog-Libraries- https://github.com/cipriancraciun/volution-gprolog-libraries
