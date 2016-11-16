@@ -1,0 +1,1 @@
+% Prolog file which will define the primary logic to 1) natural language processing 2) return a name of a function back to Python
