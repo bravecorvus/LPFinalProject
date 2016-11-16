@@ -5,3 +5,8 @@
 CMU Sphinx
 Python Sphinx Integration Module
 Python SWI-Prolog Integration Module
+
+##Repo Structure
+
+    source/ -Where all the code is housed.
+    presentation_assets/ -Strictly for pictures, design files, and PDF's for Project Presentations
