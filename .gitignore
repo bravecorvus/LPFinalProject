@@ -4,6 +4,7 @@ speech.wav
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
+fusekubuntu/
 fuse/
 *.py[cod]
 
