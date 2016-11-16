@@ -1,10 +1,14 @@
 import os
 import json
 from os.path import join, dirname
+<<<<<<< Updated upstream
 from dotenv import load_dotenv
 dotenv_path = join(dirname(__file__), '.env')
 load(dotenv_path)
 os.environ.update(dotenv)
+=======
+from python_dotenv import load_dotenv
+>>>>>>> Stashed changes
 from watson_developer_cloud import SpeechToTextV1 as SpeechToText
 from watson_developer_cloud import AlchemyLanguageV1 as AlchemyLanguage
 

@@ -4,6 +4,7 @@ speech.wav
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
+fuse/
 *.py[cod]
 
 # C extensions
