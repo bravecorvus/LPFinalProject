@@ -1,8 +1,7 @@
-#Alexa and GNU Prolog Integration
-###Andrew Lee
+#Project Assistant
+###Magnus Cardell and Andrew Lee
 
 ##Libraries
-ZeroMQ- http://zeromq.org/
-Libsodium- https://github.com/jedisct1/libsodium
-Node.js
-Volution-GProlog-Libraries- https://github.com/cipriancraciun/volution-gprolog-libraries
+CMU Sphinx
+Python Sphinx Integration Module
+Python SWI-Prolog Integration Module
