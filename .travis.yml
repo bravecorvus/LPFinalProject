@@ -42,7 +42,4 @@ script: main.py
 #blocklist
 branches:
   only:
-    - dev-cardel1
-    - dev-leeas
     - dev
-    - stable
