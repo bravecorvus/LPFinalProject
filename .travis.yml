@@ -27,7 +27,6 @@ before_install:
 language: python
 python:
   - "2.7"
-script: main.py
 
 #blocklist
 branches:
