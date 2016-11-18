@@ -1,16 +1,27 @@
 before_install:
-  - sudo apt-get install \
-  build-essential autoconf curl chrpath pkg-config -y\
-  ncurses-dev libreadline-dev libunwind-dev -y\
-  libgmp-dev -y\
-  libssl-dev -y\
-  unixodbc-dev -y\
-  zlib1g-dev libarchive-dev -y\
-  libossp-uuid-dev -y\
-  libxext-dev libice-dev libjpeg-dev libxinerama-dev libxft-dev -y\
-  libxpm-dev libxt-dev -y\
-  libdb-dev -y\
-  openjdk-8-jdk junit
+  - sudo apt-get install build-essential -y
+  - sudo apt-get install autoconf -y
+  - sudo apt-get install curl -y
+  - sudo apt-get install chrpath -y
+  - sudo apt-get install pkg-config -y
+  - sudo apt-get install ncurses-dev -y
+  - sudo apt-get install libreadline-dev -y
+  - sudo apt-get install libunwind-dev -y
+  - sudo apt-get install libgmp-dev -y
+  - sudo apt-get install libssl-dev -y
+  - sudo apt-get install unixodbc-dev -y
+  - sudo apt-get install zlib1g-dev
+  - sudo apt-get install libarchive-dev -y
+  - sudo apt-get install libossp-uuid-dev -y
+  - sudo apt-get install libxext-dev
+  - sudo apt-get install libice-dev -y
+  - sudo apt-get install libjpeg-dev -y
+  - sudo apt-get install libxinerama-dev -y
+  - sudo apt-get install libxft-dev -y
+  - sudo apt-get install libxpm-dev libxt-dev -y
+  - sudo apt-get install libdb-dev -y
+  - sudo apt-get install openjdk-8-jdk -y
+  - sudo apt-get install junit -y
   - sudo add-apt-repository ppa:swi-prolog/stable -y
   - sudo apt-get update -q
   - sudo apt-get install swi-prolog -y
@@ -18,10 +29,9 @@ before_install:
   - wget https://sourceforge.net/projects/cmusphinx/files/pocketsphinx/5prealpha/pocketsphinx-5prealpha.tar.gz/download -O pocketsphinx.tar.gz
   - tar -xzvf sphinxbase.tar.gz
   - tar -xzvf pocketsphinx.tar.gz
-  - sudo apt-get install \
-  bison -y \
-  libasound2-dev -y \
-  swig -y
+  - sudo apt-get install bison -y 
+  - sudo apt-get install libasound2-dev -y 
+  - sudo apt-get install swig -y
   - cd sphinxbase-5prealpha
   - ./configure
   - make
