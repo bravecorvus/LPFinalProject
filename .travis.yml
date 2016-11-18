@@ -1,0 +1,40 @@
+before_install:
+  - sudo apt-get install \
+  build-essential autoconf curl chrpath pkg-config -y\
+  ncurses-dev libreadline-dev libunwind-dev -y\
+  libgmp-dev -y\
+  libssl-dev -y\
+  unixodbc-dev -y\
+  zlib1g-dev libarchive-dev -y\
+  libossp-uuid-dev -y\
+  libxext-dev libice-dev libjpeg-dev libxinerama-dev libxft-dev -y\
+  libxpm-dev libxt-dev -y\
+  libdb-dev -y\
+  openjdk-8-jdk junit
+  - sudo add-apt-repository ppa:swi-prolog/stable -y
+  - sudo apt-get update -q
+  - sudo apt-get install swi-prolog -y
+  - wget https://sourceforge.net/projects/cmusphinx/files/sphinxbase/5prealpha/sphinxbase-5prealpha.tar.gz/download -O sphinxbase.tar.gz
+  - wget https://sourceforge.net/projects/cmusphinx/files/pocketsphinx/5prealpha/pocketsphinx-5prealpha.tar.gz/download -O pocketsphinx.tar.gz
+  - tar -xzvf sphinxbase.tar.gz
+  - tar -xzvf pocketsphinx.tar.gz
+  - sudo apt-get install \
+  bison -y \
+  libasound2-dev -y \
+  swig -y
+  - cd sphinxbase-5prealpha
+  - ./configure
+  - make
+  - sudo make install
+  - cd ../pocketsphinx-5prealpha
+  - ./configure
+  - make
+  - sudo make install
+
+language: python
+  - "3.5"
+
+install:
+  - pip install pocketsphinx
+  - pip install pyswip
+script: main.py
