@@ -38,3 +38,11 @@ install:
   - pip install pocketsphinx
   - pip install pyswip
 script: main.py
+
+#blocklist
+branches:
+  only:
+    - dev-cardel1
+    - dev-leeas
+    - dev
+    - stable
