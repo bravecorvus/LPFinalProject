@@ -17,13 +17,12 @@ before_install:
   - ./configure
   - make
   - sudo make install
-
-language: python
-  - "3.5"
-
-install:
+  - pip install --upgrade pip
   - pip install pocketsphinx
   - pip install pyswip
+
+language: python
+  - "2.7"
 script: main.py
 
 #blocklist
