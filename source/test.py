@@ -3,3 +3,4 @@ import subprocess
 # command = "gprolog"
 # prolog = call(["gprolog"])
 ls_output=subprocess.Popen(["ls", "-a"], stdout=subprocess.PIPE)
+print(ls_output)
