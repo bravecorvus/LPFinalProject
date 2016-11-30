@@ -1,6 +1,20 @@
-from subprocess import *
-import subprocess
+from subprocess import Popen, PIPE, STDOUT
 # command = "gprolog"
 # prolog = call(["gprolog"])
-ls_output=subprocess.Popen(["ls", "-a"], stdout=subprocess.PIPE)
-print(ls_output)
+print("Launching gprolog process")
+prologengine=Popen(["gprolog", "dictionary.pl"], stdin=PIPE, stdout=PIPE, stderr=STDOUT)
+
+while True:
+    line = raw_input(">")
+    prologengine.stdin.write(line+'\n')
+    result = []
+    while True:
+        if prologengine.poll() is not None:
+            print('prologengine has terminated.')
+            exit()
+        line = prologengine.stdout.readline().rstrip()
+        if line == '[end]':
+            break
+        result.append(line)
+    print('result')
+    print('\n'.join(result))
