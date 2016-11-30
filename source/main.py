@@ -8,7 +8,7 @@ while True:
     if userinput == "exit()":
         break
     elif userinput[len(userinput)-1] == '.':
-        userinput = userinput[0:len(userinput)-2]
+        userinput = userinput[0:len(userinput)-1]
         prolog.consult(userinput)
         list(prolog.query(userinput))
 
