@@ -7,7 +7,7 @@ while True:
     userinput = input("?- ")
     if userinput == "exit()":
         break
-    elif userinput[len(userinput)-1] == ".":
+    elif userinput[len(userinput)-1] == '.':
         userinput = userinput[0:len(userinput)-2]
         prolog.consult(userinput)
         list(prolog.query(userinput))
