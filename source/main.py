@@ -8,8 +8,8 @@ while True:
     if userinput == "exit()":
         break
     else:
-        if userinput[len(userinput)] == ".":
-            userinput = userinput[0:len(userinput)-1]
+        if userinput[len(userinput)-1] == ".":
+            userinput = userinput[0:len(userinput)-2]
         prolog.consult(userinput)
         list(prolog.query(userinput))
 
