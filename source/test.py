@@ -1,3 +1,4 @@
-from subprocess import call
-command = "gprolog"
-prlog = call(["gprolog"])
+from subprocess import *
+# command = "gprolog"
+# prolog = call(["gprolog"])
+ls_output=subprocess.Popen(["ls", "-a"], stdout=subprocess.PIPE)
