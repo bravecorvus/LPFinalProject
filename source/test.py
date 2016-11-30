@@ -1,5 +1,3 @@
-import IPython
-import subprocess
-IPython.embed()
-bashCommand = "gprolog"
-output = subprocess.check_output(['bash','-c', bashCommand])
+from subprocess import call
+command = "gprolog"
+call(["gprolog"])
