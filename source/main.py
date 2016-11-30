@@ -4,7 +4,7 @@ userinput = ""
 print('Welcome to SWI-Prolog (Multi-threaded, 64 bits, Version 7.2.3)\nCopyright (c) 1990-2015 University of Amsterdam, VU Amsterdam\nSWI-Prolog comes with ABSOLUTELY NO WARRANTY. This is free software,\nand you are welcome to redistribute it under certain conditions.\nPlease visit http://www.swi-prolog.org for details")\n\n For help, use ?- help(Topic). or ?- apropos(Word).')
 prolog.consult("dictionary.pl")
 while True:
-    userinput = input("?- ")
+    userinput = raw_input("?- ")
     if userinput == "exit()":
         break
     elif userinput[len(userinput)-1] == '.':
