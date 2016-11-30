@@ -1,3 +1,3 @@
 from subprocess import call
 command = "gprolog"
-call(["gprolog"])
+prlog = call(["gprolog"])
