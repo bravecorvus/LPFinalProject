@@ -1,3 +1,4 @@
+import sys
 from pocketsphinx import LiveSpeech
 import speech_recognition as sr
 
@@ -17,3 +18,6 @@ while True:
 		except sr.RequestError as e:
 			# print("Sphinx error; {0}".format(e))
 			print("\n")
+	speech = LiveSpeech(lm=False, keyphrase='exit', kws_threshold=1e+20)
+	for phrse in speech:
+		sys.exit()
