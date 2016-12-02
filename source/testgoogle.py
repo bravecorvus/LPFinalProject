@@ -13,8 +13,7 @@ try:
     # for testing purposes, we're just using the default API key
     # to use another API key, use `r.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY", show_all=True)`
     # instead of `r.recognize_google(audio, show_all=True)`
-    print("Google Speech Recognition results:")
-    pprint(r.recognize_google(audio, show_all=True)) # pretty-print the recognition result
+    print("Google Speech Recognition thinks you said " + r.recognize_google(audio))
 except sr.UnknownValueError:
     print("Google Speech Recognition could not understand audio")
 except sr.RequestError as e:
