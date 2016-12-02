@@ -28,6 +28,8 @@ server_loop(S) :-
 server_operation(In, Out) :-
   \+at_end_of_stream(In),
   read_pending_input(In, Codes, []),   %RECEIVING INPUT HERE
+  format("~s~n", [Codes]),
+  %writeln(Codes),
   format(Out, '~s', [Codes]),
   flush_output(Out),
   server_operation(In, Out).
