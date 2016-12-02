@@ -8,7 +8,7 @@ with sr.Microphone() as source:
 
 # recognize speech using Sphinx
 try:
-    print("Assistant registered the phrase " + r.recognize_sphinx(audio))
+    print("Assistant registered the phrase " + r.recognize_google(audio))
 except sr.UnknownValueError:
     print("Assistant could not understand audio")
 except sr.RequestError as e:
