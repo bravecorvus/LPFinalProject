@@ -1,6 +1,3 @@
-from os import path
-AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "english.wav")
-
 from pprint import pprint
 import speech_recognition as sr
 # r = sr.Recognizer()
