@@ -25,7 +25,7 @@ def actions():
         sendstream = "inputparser([" + ''.join(userinput) + "], X)."
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((TCP_IP, TCP_PORT))
-        s.send(sendstream)
+        s.send(bytes(sendstream, 'UTF-8'))
         data = s.recv(BUFFER_SIZE)
         s.close()
         print("received data:", data)
@@ -38,7 +38,8 @@ while True:
     with sr.Microphone() as source:
             audio = r.listen(source)
     try:
-        if r.recognize_google(audio) == 'hey assistant' or r.recognize_google(audio) == 'his system' or r.recognize_google(audio) == 'hey system' or r.recognize_google(audio) == 'his assistant' or r.recognize_google(audio) == 'assistance' or r.recognize_google(audio) == 'assistant':
+        googlespeech = r.recognize_google(audio)
+        if googlespeech == 'hey assistant' or googlespeech == 'his system' or googlespeech == 'hey system' or googlespeech == 'his assistant' or googlespeech == 'assistance' or googlespeech == 'assistant':
             print("\n\n\nSUCCESS! \n\n\nThis is assistant. How can I be of service?")
             actions()
         # for testing purposes, we're just using the default API key
