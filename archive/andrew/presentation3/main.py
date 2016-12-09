@@ -29,7 +29,7 @@ def actions():
         data = s.recv(BUFFER_SIZE)
         s.close()
 
-print "received data:", data
+print("received data:", data)
     except sr.UnknownValueError:
         print("Assistant could not understand audio")
     except sr.RequestError as e:
