@@ -1,4 +1,4 @@
-We likely wont use this structure in favor of a Python client.
+%We likely wont use this structure in favor of a Python client.
 
 :- use_module(library(socket)).
 
