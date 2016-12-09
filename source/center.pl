@@ -27,27 +27,25 @@ server_loop(S) :-
     close(Out))), !,
   server_loop(S).
 
-converter(Codes, V):-
+server_operation(In, Out) :-
+  \+at_end_of_stream(In),
+  read_pending_input(In, Codes, []),   %RECEIVING INPUT HERE
+  converter(Codes, Result),
+  format(Out, "~s", [Result]),
+  flush_output(Out),
+  server_operation(In, Out).
+
+server_operation(_In, _Out).
+
+converter(Codes, Result):-
   string_to_list(QueryS, Codes),
   atom_string(Query, QueryS),
   term_to_atom(X, Query),
   call(X),
   arg(3,X,V),	 %Gets the (ArgNum)th argument. 
-  term_to_atom(X, Query),
-  atom_string(Query, QueryS),
-  string_to_list(QueryS, Codes).
-
-server_operation(In, Out) :-
-  \+at_end_of_stream(In),
-  read_pending_input(In, Codes, []),   %RECEIVING INPUT HERE
-  %format("~s~n", [Codes]),
-  converter(Codes, Output),
-  writeln(Output),
-  format(Out, '~n', Output),
-  flush_output(Output),
-  server_operation(In, Out).
-
-server_operation(_In, _Out).
+  term_to_atom(V, ResultB),
+  atom_string(ResultB, ResultA),
+  string_to_list(ResultA, Result).
 
 %Example program to be queried
 append1([], L, L).
