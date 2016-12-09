@@ -19,16 +19,25 @@ server_loop(S) :-
   tcp_accept(S, S1, From),
   format('receiving traffic from: ~q~n', [From]),
   setup_call_cleanup(tcp_open_socket(S1, In, Out), 
-    server_operation(In, Out),
+    communication(In, Out),
     (writeln('closing...'),
     close(In),
     close(Out))), !,
   server_loop(S).
 
+
+communication(In, Out):-
+	server_operation(In, Out).
+
+convert(Codes):-
+  string_to_list(Query, Codes),
+  call(Query, Unification),
+
 server_operation(In, Out) :-
   \+at_end_of_stream(In),
   read_pending_input(In, Codes, []),   %RECEIVING INPUT HERE
   format("~s~n", [Codes]),
+  convert(Codes),
   %writeln(Codes),
   format(Out, '~s', [Codes]),
   flush_output(Out),
