@@ -32,7 +32,10 @@ converter(Codes, V):-
   atom_string(Query, QueryS),
   term_to_atom(X, Query),
   call(X),
-  arg(3,X,V).	 %Gets the (ArgNum)th argument. 
+  arg(3,X,V),	 %Gets the (ArgNum)th argument. 
+  term_to_atom(X, Query),
+  atom_string(Query, QueryS),
+  string_to_list(QueryS, Codes).
 
 server_operation(In, Out) :-
   \+at_end_of_stream(In),
