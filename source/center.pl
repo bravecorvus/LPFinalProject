@@ -5,6 +5,8 @@
 % Start the client in another instance of Prolog:
 %  ?- client(localhost:1025).
 
+dynamic(append1/3).
+
 server :-
   server(1025).
 
@@ -19,28 +21,27 @@ server_loop(S) :-
   tcp_accept(S, S1, From),
   format('receiving traffic from: ~q~n', [From]),
   setup_call_cleanup(tcp_open_socket(S1, In, Out), 
-    communication(In, Out),
+    server_operation(In, Out),
     (writeln('closing...'),
     close(In),
     close(Out))), !,
   server_loop(S).
 
-
-communication(In, Out):-
-	server_operation(In, Out).
-
-convert(Codes):-
-  string_to_list(Query, Codes),
-  call(Query, Unification),
+converter(Codes, V):-
+  string_to_list(QueryS, Codes),
+  atom_string(Query, QueryS),
+  term_to_atom(X, Query),
+  call(X),
+  arg(3,X,V).	 %Gets the (ArgNum)th argument. 
 
 server_operation(In, Out) :-
   \+at_end_of_stream(In),
   read_pending_input(In, Codes, []),   %RECEIVING INPUT HERE
-  format("~s~n", [Codes]),
-  convert(Codes),
-  %writeln(Codes),
-  format(Out, '~s', [Codes]),
-  flush_output(Out),
+  %format("~s~n", [Codes]),
+  converter(Codes, Output),
+  writeln(Output),
+  format(Out, '~n', Output),
+  flush_output(Output),
   server_operation(In, Out).
 
 server_operation(_In, _Out).
