@@ -26,7 +26,7 @@ def actions():
         sendstream = "inputparser([" + ''.join(userinput) + "], X)."
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((TCP_IP, TCP_PORT))
-        s.send(sendstream)
+        s.send(bytes(sendstream, 'UTF-8'))
         data = s.recv(BUFFER_SIZE)
         s.close()
         print("received data:", data)
