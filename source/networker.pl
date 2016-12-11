@@ -14,20 +14,21 @@ server_loop(S) :-
   tcp_accept(S, S1, From),
   writeln(From),
   setup_call_cleanup(tcp_open_socket(S1, In, Out), 
-    server_operation(In, Out, From, S1),
+    server_operation(In, Out),
     (writeln('closing...'),
     close(In),
     close(Out))), !,
   server_loop(S).
 
-server_operation(_In, _Out, From, S1).
-server_operation(In, Out, From, S1) :-
+server_operation(In, Out) :-
   \+at_end_of_stream(In),
   read_pending_input(In, Codes, []),  %RECEIVING INPUT HERE
-  in_and_out_format(Codes, Result, From, S1),   %external
+  in_and_out_format(Codes, Result),   %external function to understand input
   format(Out, "~s", [Result]),
   flush_output(Out),
-  server_operation(In, Out, From, S1).
+  server_operation(In, Out).
+
+server_operation(_In, _Out).
 
 send(From, S, Message) :-
   udp_socket(S),

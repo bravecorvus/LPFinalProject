@@ -5,7 +5,7 @@
 % start server with
 % ?- server(1025). or ?- server.
 
-in_and_out_format(Codes, Result, From, S1):-
+in_and_out_format(Codes, Result):-
   string_to_list(QueryS, Codes),
   atom_string(Query, QueryS),
   term_to_atom(Goal, Query),
