@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import socket
+import pyaudio
 # from pocketsphinx import LiveSpeech
 import speech_recognition as sr
 
