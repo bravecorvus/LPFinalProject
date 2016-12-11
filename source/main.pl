@@ -10,6 +10,7 @@ in_and_out_format(Codes, Result, From, S1):-
   atom_string(Query, QueryS),
   term_to_atom(Goal, Query),
   call(Goal),
+  writeln(Goal),
   %arg(3,Goal,V),	 %Gets the (n)th argument. 
   term_to_atom(Goal, ResultB),
   atom_string(ResultB, ResultA),
