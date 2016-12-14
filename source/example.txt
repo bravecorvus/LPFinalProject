@@ -1,0 +1,9 @@
+X = get(next, calendar, event)
+X = set(next, calendar, event, "")
+"Hey assistant, whats my next calendar event"
+
+def actions(arg):
+	
+
+
+b'append1([a, b], c, [a, b|c])'
