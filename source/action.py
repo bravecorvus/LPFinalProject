@@ -1,78 +1,63 @@
-from __future__ import print_function
-import httplib2
-import os
+import gdata.calendar.service
+import gdata.service
+import atom.service
+import gdata.calendar
+import gdata.calendar
+import atom
+import getopt
+import sys
+import string
+import time
+ 
 
-from apiclient import discovery
-from oauth2client import client
-from oauth2client import tools
-from oauth2client.file import Storage
+import xe #for the time comparator
+from feed.date.rfc3339 import tf_from_timestamp #also for the comparator
+from datetime import datetime #for the time on the rpi end
+from apscheduler.scheduler import Scheduler #this will let us check the calender on a regular interval
+import os, random #to play the mp3 later
+ 
 
-import datetime
+#this is more stuff google told me to do, but essentially it handles the login credentials
+calendar_service = gdata.calendar.service.CalendarService()
+calendar_service.email = 'cs125fp@gmail.com' #your email
+calendar_service.password = 'Abcd@1234' #your password
+calendar_service.source = 'LP Assistant Calendar'
+calendar_service.ProgrammaticLogin()
 
-try:
-    import argparse
-    flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
-except ImportError:
-    flags = None
+userinput = raw_input('Search for an event')
 
-# If modifying these scopes, delete your previously saved credentials
-# at ~/.credentials/calendar-python-quickstart.json
-SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
-CLIENT_SECRET_FILE = 'client_secret.json'
-APPLICATION_NAME = 'Google Calendar API Python Quickstart'
+ 
+def FullTextQuery(calendar_service, text_query=userinput):
+    print 'Full text query for events on Primary Calendar: \'%s\'' % ( text_query,)
+    query = gdata.calendar.service.CalendarEventQuery('default', 'private', 'full', text_query)
+    feed = calendar_service.CalendarQuery(query)
+    for i, an_event in enumerate(feed.entry):
+        for a_when in an_event.when:
+            print "---"
+            print an_event.title.text ,"Number:",i,"Event Time:",time.strftime('%d-%m-%Y %H:%M',time.localtime(tf_from_timestamp(a_when.start_time))),"Current Time:",time.strftime('%d-%m-%Y %H:%M')
+ 
+            if time.strftime('%d-%m-%Y %H:%M',time.localtime(tf_from_timestamp(a_when.start_time))) == time.strftime('%d-%m-%Y %H:%M'):
+                print "Comparison: Pass"
+                print "---"
+ 
+                songfile = random.choice(os.listdir("/home/pi/alarmclock/test_MP3s/")) #chooses the .mp3 file
+                print "File Selected:", songfile
+                command ="mpg321" + " " + "/home/pi/alarmclock/test_MP3s/" + "'"+songfile+"'"+ " -g 100" #plays the MP3 in it's entierty. As long as the song is longer than a minute then will only trigger once in the minute that start of the "wake" event
+ 
+                print command
+                os.system(command) #runs the bash command
+            else:
+                print "Comparison:Fail" #the "wake" event's start time != the system's current time
+ 
 
+FullTextQuery(calendar_service)
+# def callable_func():
+#     os.system("clear") #this is more for my benefit and is in no way necesarry
+#     print "------------start-----------"
+#     FullTextQuery(calendar_service)
+#     print "-------------end------------"
+ 
 
-def get_credentials():
-    """Gets valid user credentials from storage.
-
-    If nothing has been stored, or if the stored credentials are invalid,
-    the OAuth2 flow is completed to obtain the new credentials.
-
-    Returns:
-        Credentials, the obtained credential.
-    """
-    home_dir = os.path.expanduser('~')
-    credential_dir = os.path.join(home_dir, '.credentials')
-    if not os.path.exists(credential_dir):
-        os.makedirs(credential_dir)
-    credential_path = os.path.join(credential_dir,
-                                   'calendar-python-quickstart.json')
-
-    store = Storage(credential_path)
-    credentials = store.get()
-    if not credentials or credentials.invalid:
-        flow = client.flow_from_clientsecrets(CLIENT_SECRET_FILE, SCOPES)
-        flow.user_agent = APPLICATION_NAME
-        if flags:
-            credentials = tools.run_flow(flow, store, flags)
-        else: # Needed only for compatibility with Python 2.6
-            credentials = tools.run(flow, store)
-        print('Storing credentials to ' + credential_path)
-    return credentials
-
-def main():
-    """Shows basic usage of the Google Calendar API.
-
-    Creates a Google Calendar API service object and outputs a list of the next
-    10 events on the user's calendar.
-    """
-    credentials = get_credentials()
-    http = credentials.authorize(httplib2.Http())
-    service = discovery.build('calendar', 'v3', http=http)
-
-    now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
-    print('Getting the upcoming 10 events')
-    eventsResult = service.events().list(
-        calendarId='primary', timeMin=now, maxResults=10, singleEvents=True,
-        orderBy='startTime').execute()
-    events = eventsResult.get('items', [])
-
-    if not events:
-        print('No upcoming events found.')
-    for event in events:
-        start = event['start'].get('dateTime', event['start'].get('date'))
-        print(start, event['summary'])
-
-
-if __name__ == '__main__':
-    main()
+# scheduler = Scheduler(standalone=True)
+# scheduler.add_interval_job(callable_func,seconds=5)
+# scheduler.start() #runs the program indefinatly on an interval of 5 seconds
