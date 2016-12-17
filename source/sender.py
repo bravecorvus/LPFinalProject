@@ -4,9 +4,9 @@ import socket
 
 
 TCP_IP = '127.0.0.1'
-TCP_PORT = 1025
+TCP_PORT = 1030
 BUFFER_SIZE = 1024
-MESSAGE = "append([a,b],c, X)"
+MESSAGE = "bye"
 
 print("sending data:", MESSAGE)
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

@@ -21,29 +21,42 @@ in_and_out_format(Codes, Result):-
 
 % input is a unification request
 gen_reply(Q, A):-
+	writeln("testing unification... "),
 	is_uni(Q, A), !.
 
 % input is a greeting
 gen_reply(Q, A):-
+	writeln("testing greeting... "),
 	is_greeting(Q), !,
 	reply_db(greeting, List),
-	writeln(List),
 	random_member(A, List).
 
+% input is a goodbye
+gen_reply(Q, A):-
+	writeln("testing goodbye..."),
+	is_goodbye(Q), !,
+	reply_db(goodbye, List),
+	random_member(A, List).
+
+% catch-all reply
+gen_reply(Q, A):-
+	writeln("...all tested, return nothing."),
+	reply_db(unknown, A).
 
 
 is_uni(Q, A):-
-	writeln("testing unification... "),
 	term_to_atom(Goal, Q),
 	catch(Goal, _E, fail),
 	writeln(Goal),
 	term_to_atom(Goal, A).
 
 is_greeting(Q):-
-	writeln("testing greeting... "),
 	greeting_db(List),
 	member(Q, List).
 
+is_goodbye(Q):-
+	goodbye_db(List),
+	member(Q, List).
 
 
 %ARCHIVED functions

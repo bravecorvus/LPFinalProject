@@ -29,8 +29,3 @@ server_operation(In, Out) :-
   server_operation(In, Out).
 
 server_operation(_In, _Out).
-
-send(From, S, Message) :-
-  udp_socket(S),
-  udp_send(S, Message, Host:Port, []),
-  tcp_close_socket(S).
