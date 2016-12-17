@@ -28,7 +28,7 @@ gen_reply(Q, A):-
 	is_greeting(Q), !,
 	reply_db(greeting, List),
 	writeln(List),
-	random_member(List, A).
+	random_member(A, List).
 
 
 
