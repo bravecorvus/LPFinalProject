@@ -8,3 +8,4 @@ cd gcalcli
 sudo python setup.py install
 
 sudo apt-get install libjack-jackd2-dev portaudio19-dev
+sudo pip2 install apscheduler==2.1.2
