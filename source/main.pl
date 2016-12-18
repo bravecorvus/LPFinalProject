@@ -19,11 +19,6 @@ in_and_out_format(Codes, Result):-
 	atom_string(ResultB, ResultA),
 	string_to_list(ResultA, Result).
 
-% input is a unification request
-gen_reply(Q, A):-
-	writeln("testing unification... "),
-	is_uni(Q, A), !.
-
 % input is a greeting
 gen_reply(Q, A):-
 	writeln("testing greeting... "),
@@ -38,8 +33,26 @@ gen_reply(Q, A):-
 	reply_db(goodbye, List),
 	random_member(A, List).
 
-% catch-all reply
+% input is a goodbye
 gen_reply(Q, A):-
+	writeln("testing feelings..."),
+	is_feeling(Q), !,
+	reply_db(feelings, List),
+	random_member(A, List).
+
+% input is requesting next calendar event
+gen_reply(Q, A):-
+	writeln("testing known questions1... "),
+	is_get_calevent(Q), !,
+	reply_db(next_event, A).
+
+% input is a unification request
+gen_reply(Q, A):-
+	writeln("testing unification... "),
+	is_uni(Q, A), !.
+
+% catch-all reply
+gen_reply(_, A):-
 	writeln("...all tested, return nothing."),
 	reply_db(unknown, A).
 
@@ -56,6 +69,14 @@ is_greeting(Q):-
 
 is_goodbye(Q):-
 	goodbye_db(List),
+	member(Q, List).
+
+is_feeling(Q):-
+	feelings_db(List),
+	member(Q, List).
+
+is_get_calevent(Q):-
+	get_event_db(List),
 	member(Q, List).
 
 
