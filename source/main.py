@@ -21,7 +21,8 @@ def actions():
         for count, data in enumerate(userinput):
             if count < len(userinput)-1:
                 userinput[count] = data + ', '
-        print('\n\n\nSUCCESS\n\n\nWill send the following term to prolog\n')
+        # print('\n\n\nSUCCESS\n\n\nWill send the following term to prolog\n')
+        print(userinput)
         sendstream = "inputparser([" + ''.join(userinput) + "], X)."
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((TCP_IP, TCP_PORT))
@@ -39,7 +40,8 @@ while True:
             audio = r.listen(source)
     try:
         if r.recognize_google(audio) == 'hey assistant' or r.recognize_google(audio) == 'his system' or r.recognize_google(audio) == 'hey system' or r.recognize_google(audio) == 'his assistant' or r.recognize_google(audio) == 'assistance' or r.recognize_google(audio) == 'assistant':
-            print("\n\n\nSUCCESS! \n\n\nThis is assistant. How can I be of service?")
+            # print("\n\n\nSUCCESS! \n\n\nThis is assistant. How can I be of service?")
+            print(r.recognize_google(audio))
             actions()
         # for testing purposes, we're just using the default API key
         # to use another API key, use `r.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY", show_all=True)`

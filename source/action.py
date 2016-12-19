@@ -85,9 +85,12 @@ def main():
         dalist.append(dastring)
 
     # print(dalist[0][26:])
-    return_code= subprocess.call(["espeak", dalist[0][26:]])
-    t = Timer(int(sys.argv[1]), alarm)
-    t.start()
+    # print(dalist)
+    # subprocess.call(["espeak", dalist[0][26:]])
+    for i in dalist:
+    	subprocess.call(["espeak", i[26:]])
+    # t = Timer(int(sys.argv[1]), alarm)
+    # t.start()
 
 
 
