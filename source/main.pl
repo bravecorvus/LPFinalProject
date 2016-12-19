@@ -1,4 +1,4 @@
-:- [networker, appender, database].
+:- [networker, appender, database, contexter].
 :- use_module(library(random)).
 
 % Compile this program to include functions in networker and any other file:
@@ -33,6 +33,13 @@ gen_reply(Q, A):-
 	reply_db(goodbye, List),
 	random_member(A, List).
 
+% input is an idle response
+gen_reply(Q, A):-
+	writeln("testing idle responses..."),
+	is_idle(Q), !,
+	reply_db(idle, List),
+	random_member(A, List).
+
 % input is a goodbye
 gen_reply(Q, A):-
 	writeln("testing feelings..."),
@@ -49,19 +56,27 @@ gen_reply(Q, A):-
 % input is a unification request
 gen_reply(Q, A):-
 	writeln("testing unification... "),
-	is_uni(Q, A), !.
+	is_uni(Q, A),
+	writeln("SUXXWWAAA"),
+	writeln(Q).
 
 % catch-all reply
 gen_reply(_, A):-
 	writeln("...all tested, return nothing."),
 	reply_db(unknown, A).
 
-
 is_uni(Q, A):-
-	term_to_atom(Goal, Q),
-	catch(Goal, _E, fail),
-	writeln(Goal),
-	term_to_atom(Goal, A).
+	split_string(Q, " ", ",", [X|Y]),
+	uni_db(Z),
+	writeln(X),
+	writeln(Z),
+	member(X, Z).
+
+%is_uni(Q, A):-
+%	term_to_atom(Goal, Q),
+%	catch(Goal, _E, fail),
+%	writeln(Goal),
+%	term_to_atom(Goal, A).
 
 is_greeting(Q):-
 	greeting_db(List),
@@ -77,6 +92,10 @@ is_feeling(Q):-
 
 is_get_calevent(Q):-
 	get_event_db(List),
+	member(Q, List).
+
+is_idle(Q):-
+	idle_db(List),
 	member(Q, List).
 
 

@@ -4,18 +4,24 @@ greeting_db([
 	hello, 
 	hi, 
 	hey,
-	yo
+	yo,
+	'hello there',
+	greetings,
+	greeting
 	]).
 goodbye_db([
 	bye, 
 	goodbye, 
 	farewell, 
 	byebye,
-	'bye bye'
+	'bye bye',
+	'see you later'
 	]).
 feelings_db([
 	'how are you',
-	'how are you feeling'
+	'how are you feeling',
+	'whats up',
+	'what is up'
 	]).
 
 get_event_db([
@@ -34,6 +40,32 @@ get_event_db([
 
 thanks(['thank you', 'thanks', 'appreciated']).
 
+idle_db([
+	'good',
+	'fine',
+	'alright',
+	'cool',
+	'nice',
+	'okay',
+	'im good',
+	'i am good',
+	'i am okay',
+	'i am fine',
+	'i am okay',
+	'it could be better',
+	'bad',
+	'pretty bad',
+	'perfect',
+	'could be better'
+	]).
+
+uni_db([
+	append,
+	member,
+	append1
+	]).
+
+
 reply_db(greeting, [
 	'Hello!', 
 	'Hi!', 
@@ -51,7 +83,7 @@ reply_db(goodbye, [
 reply_db(feelings, [
 	"I'm good, thank you",
 	"I am feeling good",
-	"Good, and you?,",
+	"I'm good...",
 	"Better than yesterday",
 	"Good, thanks for asking",
 	"I'm fine",
@@ -59,11 +91,13 @@ reply_db(feelings, [
 	]).
 
 reply_db(next_event,
-	"get(next, event)").
+	"get(next, calender, event)").
 
 reply_db(unknown,
-	"I'm sorry, I could not find what you where asking for").
+	"I have not learned that yet...").
 
-responses(get_event, ['get(next, calendar, event)']).
-responses(set_event, ['set(next, calendar, event)']).
-responses(my_name, ['My name is the Personal Assistant']).
+reply_db(idle, [
+	"Ask me something else",
+	"Mhm...",
+	"..."
+	]).
