@@ -53,7 +53,6 @@ gen_reply(Q, A):-
 
 % catch-all reply
 gen_reply(_, A):-
-	catch(Goal, _E, fail),
 	writeln("...all tested, return nothing."),
 	reply_db(unknown, A).
 
