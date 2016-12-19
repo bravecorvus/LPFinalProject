@@ -21,7 +21,7 @@ dalist = []
 TCP_IP = '127.0.0.1'
 TCP_PORT = 1025
 BUFFER_SIZE = 1024
-MESSAGE = "append1([a,b], c, X)."
+# MESSAGE = "append1([a,b], c, X)."
 
 def get_credentials():
     home_dir = os.path.expanduser('~')
@@ -69,11 +69,11 @@ def readoutnextevent():
         start = event['start'].get('dateTime', event['start'].get('date'))
         dastring = start + ' ' + event['summary']
         dalist.append(dastring)
-    for i in dalist:
-        subprocess.call(["espeak", i[26:]])
+    # for i in dalist:
+    subprocess.call(["espeak", dalist[0][26:]])
 
 def funcparser(arg):
-    if arg == "whats my next event":
+    if arg == "get(next, calender, event)":
         readoutnextevent()
     # elif:
 
@@ -88,17 +88,19 @@ def actions():
         # instead of `r.recognize_google(audio, show_all=True)`
         userinput = m.recognize_google(audio).split(' ')
         for count, data in enumerate(userinput):
-            if count < len(userinput)-1:
-                userinput[count] = data + ', '
-        # print('\n\n\nSUCCESS\n\n\nWill send the following term to prolog\n')
-        print(userinput)
-        sendstream = "inputparser([" + ''.join(userinput) + "], X)."
+            userinput[count] = userinput[count].encode("utf-8")
+        sendstream = ' '.join(userinput)
+        print('\n\n\nSUCCESS\n\n\nWill send the following term to prolog\n')
+        print(sendstream)
+        print(type(sendstream))
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((TCP_IP, TCP_PORT))
-        s.send(bytes(MESSAGE).encode('utf-8'))
+        s.send(bytes(sendstream).encode('utf-8'))
         data = s.recv(BUFFER_SIZE)
+        print("\n\n\n\nWE GOT DATA BACK FROM PROLOG\n\n\n")
+        print(data)
         s.close()
-        print("received data:", data)
+        # print("received data:", data)
         funcparser(data)
     except sr.UnknownValueError:
         print("Assistant could not understand audio")
@@ -109,9 +111,11 @@ while True:
     with sr.Microphone() as source:
             audio = r.listen(source)
     try:
-        if r.recognize_google(audio) == 'hey assistant' or r.recognize_google(audio) == 'his system' or r.recognize_google(audio) == 'hey system' or r.recognize_google(audio) == 'his assistant' or r.recognize_google(audio) == 'assistance' or r.recognize_google(audio) == 'assistant':
-            # print("\n\n\nSUCCESS! \n\n\nThis is assistant. How can I be of service?")
-            print(r.recognize_google(audio))
+        googleaudio = r.recognize_google(audio)
+        # if googleaudio == 'hey assistant' or googleaudio == 'his system' or googleaudio == 'hey system' or googleaudio == 'his assistant' or googleaudio == 'assistance' or googleaudio == 'assistant':
+        if googleaudio != "fuck you":
+            print("\n\n\nSUCCESS! \n\n\nThis is assistant. How can I be of service?")
+            # print(r.recognize_google(audio))
             actions()
         # for testing purposes, we're just using the default API key
         # to use another API key, use `r.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY", show_all=True)`

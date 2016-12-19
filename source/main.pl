@@ -42,6 +42,7 @@ gen_reply(Q, A):-
 
 % input is a goodbye
 gen_reply(Q, A):-
+	writeln(Q),
 	writeln("testing feelings..."),
 	is_feeling(Q), !,
 	reply_db(feelings, List),
