@@ -61,11 +61,6 @@ def get_credentials():
     return credentials
 
 def main():
-    """Shows basic usage of the Google Calendar API.
-
-    Creates a Google Calendar API service object and outputs a list of the next
-    10 events on the user's calendar.
-    """
     credentials = get_credentials()
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('calendar', 'v3', http=http)
@@ -83,14 +78,8 @@ def main():
         start = event['start'].get('dateTime', event['start'].get('date'))
         dastring = start + ' ' + event['summary']
         dalist.append(dastring)
-
-    # print(dalist[0][26:])
-    # print(dalist)
-    # subprocess.call(["espeak", dalist[0][26:]])
     for i in dalist:
     	subprocess.call(["espeak", i[26:]])
-    # t = Timer(int(sys.argv[1]), alarm)
-    # t.start()
 
 
 
