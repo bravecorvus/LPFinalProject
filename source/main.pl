@@ -56,27 +56,26 @@ gen_reply(Q, A):-
 % input is a unification request
 gen_reply(Q, A):-
 	writeln("testing unification... "),
-	is_uni(Q, A),
-	writeln("SUXXWWAAA"),
-	writeln(Q).
+	is_uni(Q),
+	uni_parser(Q, S),
+	term_to_atom(Goal, S),
+	catch(Goal, _E, fail),
+	writeln(Goal),
+	term_to_atom(Goal, A).
 
 % catch-all reply
 gen_reply(_, A):-
 	writeln("...all tested, return nothing."),
 	reply_db(unknown, A).
 
-is_uni(Q, A):-
-	split_string(Q, " ", ",", [X|Y]),
-	uni_db(Z),
-	writeln(X),
-	writeln(Z),
-	member(X, Z).
 
-%is_uni(Q, A):-
-%	term_to_atom(Goal, Q),
-%	catch(Goal, _E, fail),
-%	writeln(Goal),
-%	term_to_atom(Goal, A).
+
+
+is_uni(Q):-
+    split_string(Q, " ", ",", [X|Y]),
+    atom_codes(W,X),
+    uni_db(Z),
+    member(W, Z).
 
 is_greeting(Q):-
 	greeting_db(List),
@@ -97,6 +96,13 @@ is_get_calevent(Q):-
 is_idle(Q):-
 	idle_db(List),
 	member(Q, List).
+
+uni_parser([], S).
+uni_parser([X|Y], S):-
+	
+	writeln(Q).
+
+
 
 
 %ARCHIVED functions
