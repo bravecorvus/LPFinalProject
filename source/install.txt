@@ -1,0 +1,11 @@
+Install Google Calendar Integration Shit
+sudo apt-get install python-gdata python-dateutil python-gflags python-vobject python-parsedatetime
+sudo pip install google-api-python-client
+sudo pip install apiclient urllib3
+
+git clone https://github.com/insanum/gcalcli.git
+cd gcalcli
+sudo python setup.py install
+
+sudo apt-get install libjack-jackd2-dev portaudio19-dev
+sudo pip2 install apscheduler==2.1.2
