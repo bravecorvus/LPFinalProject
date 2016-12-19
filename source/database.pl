@@ -26,6 +26,7 @@ feelings_db([
 
 get_event_db([
 	'what is my next calender event',
+	'whats my next event',
 	'what is my next calendar event',
 	'what is my next event',
 	'get my next calender event',
