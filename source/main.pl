@@ -54,6 +54,13 @@ gen_reply(Q, A):-
 	is_get_calevent(Q), !,
 	reply_db(next_event, A).
 
+% input is requesting set calendar event
+gen_reply(Q, A):-
+	writeln("testing known questions2... "),
+	atomic_list_concat(E, " ", Q),
+	is_set_calevent(E), !,
+	reply_db(set_event, Q, A).
+
 % input is a unification request
 gen_reply(Q, A):-
 	writeln("testing unification... "),
@@ -73,7 +80,7 @@ gen_reply(_, A):-
 
 
 is_uni(Q):-
-    split_string(Q, " ", ",", [X|Y]),
+    split_string(Q, " ", ",", [X|_]),
     atom_codes(W,X),
     uni_db(Z),
     member(W, Z).
@@ -94,16 +101,13 @@ is_get_calevent(Q):-
 	get_event_db(List),
 	member(Q, List).
 
+is_set_calevent([X|Y]):-
+	set_event_db(X).
+
+
 is_idle(Q):-
 	idle_db(List),
 	member(Q, List).
-
-uni_parser([], S).
-uni_parser([X|Y], S):-
-	
-	writeln(Q).
-
-
 
 
 %ARCHIVED functions

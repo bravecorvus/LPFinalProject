@@ -26,7 +26,12 @@ feelings_db([
 
 get_event_db([
 	'what is my next calender event',
+	'whats my next calender event',
+	'whats my next calendar event',
+	"what's my next calender event",
+	"what's my next calendar event",
 	'whats my next event',
+	"what's my next event",
 	'what is my next calendar event',
 	'what is my next event',
 	'get my next calender event',
@@ -38,6 +43,13 @@ get_event_db([
 	'what is on the calendar next',
 	'what is on the schedule'
 	]).
+
+set_event_db(set).
+set_event_db(create).
+
+event_db([
+	to, new, set]).
+
 
 thanks(['thank you', 'thanks', 'appreciated']).
 
@@ -102,3 +114,5 @@ reply_db(idle, [
 	"Mhm...",
 	"..."
 	]).
+
+reply_db(set_event, Q, Q).
