@@ -20,6 +20,9 @@ in_and_out_format(Codes, Result):-
 	string_to_list(ResultA, Result).
 
 % input is a greeting
+% choose a random response
+% using the cut to not backtrack through the
+% established is_function()
 gen_reply(Q, A):-
 	writeln("testing greeting... "),
 	is_greeting(Q), !,
@@ -59,8 +62,7 @@ gen_reply(Q, A):-
 	writeln("testing known questions2... "),
 	atomic_list_concat(E, " ", Q),
 	is_set_calevent(E, O), !,
-	atomic_list_concat(O, ",", I),
-	reply_db(set_event, I, A).
+	atomic_list_concat(O, ",", A).
 
 % input is a unification request
 gen_reply(Q, A):-
@@ -79,7 +81,7 @@ gen_reply(_, A):-
 
 
 
-
+% helper functions____________________________________
 is_uni(Q):-
     split_string(Q, " ", ",", [X|_]),
     atom_codes(W,X),

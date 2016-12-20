@@ -1,5 +1,7 @@
+%Database for the Personal Assistant project. 
+%All of these functors are dependent on unification from main.pl
 
-
+%INPUT DATABASE____________________________________________________
 greeting_db([
 	hello, 
 	hi, 
@@ -79,6 +81,7 @@ uni_db([
 	]).
 
 
+% RESPONSE DATABASE_______________________________________________
 reply_db(greeting, [
 	'Hello!', 
 	'Hi!', 
@@ -114,5 +117,3 @@ reply_db(idle, [
 	"Mhm...",
 	"..."
 	]).
-
-reply_db(set_event, Q, Q).
