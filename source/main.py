@@ -1,27 +1,21 @@
 #!/usr/bin/env python
-from __future__ import print_function
+from datetime import datetime
 import subprocess
-import pygame
-from threading import Timer
-import sys
 import httplib2
 import os
-
 from apiclient import discovery
 from oauth2client import client
 from oauth2client import tools
 from oauth2client.file import Storage
-
 import datetime
 import socket
-import pyaudio
 import speech_recognition as sr
 
 dalist = []
+monthlist = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
 TCP_IP = '127.0.0.1'
 TCP_PORT = 1025
 BUFFER_SIZE = 1024
-# MESSAGE = "append1([a,b], c, X)."
 
 def get_credentials():
     home_dir = os.path.expanduser('~')
@@ -57,7 +51,6 @@ def readoutnextevent():
     service = discovery.build('calendar', 'v3', http=http)
 
     now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
-    print('Getting the upcoming 10 events')
     eventsResult = service.events().list(
         calendarId='primary', timeMin=now, maxResults=10, singleEvents=True,
         orderBy='startTime').execute()
@@ -69,13 +62,80 @@ def readoutnextevent():
         start = event['start'].get('dateTime', event['start'].get('date'))
         dastring = start + ' ' + event['summary']
         dalist.append(dastring)
-    # for i in dalist:
     subprocess.call(["espeak", dalist[0][26:]])
+
+def simpleread(arg):
+    subprocess.call(["espeak", arg])    
+
+def languageparser(arg):
+    month = ""
+    day = ""
+    year = ""
+    content = ""
+    time = ""
+    splitstring = arg.split(' ')
+    for count, data in enumerate(splitstring):
+        if data in monthlist:
+            month = data
+    for count, data in enumerate(splitstring):
+        if data[-2:] == "PM" or data[-2:] == "AM":
+            time = data
+    for count, data in enumerate(splitstring):
+        if data[:4] == "2016" or data[:4] == "2017":
+            year = data
+    limitlist = arg
+    try:
+        limitlist.remove(time)
+    except:
+        print("\n")
+    try:
+        limitlist.remove(month)
+    except:
+        print("\n")
+    try:
+        limitlist.remove(year)
+    except:
+        print("\n")
+    for i in limitlist:
+    try:
+        int(i) #testing to see if there are any other integers
+        day = i
+    except:
+        continue
+    try:
+        limitlist.remove(day)
+    except:
+        print("\n")
+    content = ' '.join(limitlist)
+    timedaylist = []
+    try:
+        timedaylist.append(month)
+        timedaylist.append(day)
+        timedaylist.append(year)
+        timedaylist.append(time)
+    except
+        timedaylist.append(month)
+        timedaylist.append(day)
+        timedaylist.append('2016')
+        timedaylist.append(time)
+    timeday = ' '.join(timedaylist)
+    datetime_object = datetime.strptime(timeday, '%B %d %Y %I:%M%p')
+    print(datetime_object)
+
+
+
+
+def setcalendar(arg):
+    datlist = languageparser(arg) #datlist will look like [2016-12-25-20:00:00, "dinner with jennifer"]
 
 def funcparser(arg):
     if arg == "get(next, calender, event)":
         readoutnextevent()
-    # elif:
+    # elif arg look like set(dinner with jennifer december 25, 2016)
+    elif arg[:4] == "set(":
+        setcalendar(arg)
+    else:
+        simpleread(arg)
 
 
 def actions():
@@ -100,7 +160,6 @@ def actions():
         print("\n\n\n\nWE GOT DATA BACK FROM PROLOG\n\n\n")
         print(data)
         s.close()
-        # print("received data:", data)
         funcparser(data)
     except sr.UnknownValueError:
         print("Assistant could not understand audio")
@@ -115,7 +174,6 @@ while True:
         # if googleaudio == 'hey assistant' or googleaudio == 'his system' or googleaudio == 'hey system' or googleaudio == 'his assistant' or googleaudio == 'assistance' or googleaudio == 'assistant':
         if googleaudio != "fuck you":
             print("\n\n\nSUCCESS! \n\n\nThis is assistant. How can I be of service?")
-            # print(r.recognize_google(audio))
             actions()
         # for testing purposes, we're just using the default API key
         # to use another API key, use `r.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY", show_all=True)`

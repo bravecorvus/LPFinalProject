@@ -1,4 +1,4 @@
-:- [networker, appender, database, contexter].
+:- [networker, database].
 :- use_module(library(random)).
 
 % Compile this program to include functions in networker and any other file:
