@@ -58,8 +58,9 @@ gen_reply(Q, A):-
 gen_reply(Q, A):-
 	writeln("testing known questions2... "),
 	atomic_list_concat(E, " ", Q),
-	is_set_calevent(E), !,
-	reply_db(set_event, Q, A).
+	is_set_calevent(E, O), !,
+	atomic_list_concat(O, ",", I),
+	reply_db(set_event, I, A).
 
 % input is a unification request
 gen_reply(Q, A):-
@@ -101,8 +102,9 @@ is_get_calevent(Q):-
 	get_event_db(List),
 	member(Q, List).
 
-is_set_calevent([X|Y]):-
-	set_event_db(X).
+is_set_calevent([X|Y], D):-
+	set_event_db(X),
+	append([create], Y, D).
 
 
 is_idle(Q):-
