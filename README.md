@@ -1,12 +1,12 @@
-#Project Assistant
-###Magnus Cardell and Andrew Lee
+# Project Assistant
+### Magnus Cardell and Andrew Lee
 
-##Libraries
+## Libraries
 CMU Sphinx
 Python Sphinx Integration Module
 Python SWI-Prolog Integration Module
 
-##Repo Structure
+## Repo Structure
 
     source/ -Where all the code is housed.
     presentation_assets/ -Strictly for pictures, design files, and PDF's for Project Presentations
